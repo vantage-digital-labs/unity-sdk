@@ -1,0 +1,40 @@
+{
+  "name": "com.vantagelabs.sdk",
+  "version": "2.4.0",
+  "displayName": "Vantage Digital Labs SDK",
+  "description": "AI-powered NPC dialogue, voice synthesis, and memory for games",
+  "unity": "2021.3",
+  "author": {
+    "name": "Vantage Digital Labs",
+    "email": "store@vantage-digital.online",
+    "url": "https://vantage-digital.online"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vantage-digital-labs/unity-sdk.git"
+  },
+  "keywords": [
+    "ai",
+    "npc",
+    "dialogue",
+    "voice",
+    "tts",
+    "game-ai"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "samples": [
+    {
+      "displayName": "Basic Dialogue",
+      "description": "Simple NPC conversation example",
+      "path": "Samples~/BasicDialogue"
+    },
+    {
+      "displayName": "Memory Demo",
+      "description": "NPC episodic memory demonstration",
+      "path": "Samples~/MemoryDemo"
+    }
+  ]
+}
