@@ -85,10 +85,11 @@ namespace VantageLabs.Core
         public void Disconnect()
         {
             _cts?.Cancel();
-            if (_ws?.State == WebSocketState.Open)
+            if (_ws != null && _ws.State == WebSocketState.Open)
             {
-                // Fire and forget close
-                _ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                // Use a fresh token — _cts is already cancelled at this point
+                _ws.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty,
+                    new CancellationTokenSource(TimeSpan.FromSeconds(3)).Token);
             }
         }
     }
