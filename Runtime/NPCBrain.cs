@@ -52,12 +52,18 @@ namespace VantageLabs.NPC
         public event Action<DialogueChunk> OnDialogueChunk;
         public event Action<EmotionState> OnEmotionChange;
         public event Action<AudioClip> OnAudioReady;
+        public event Action<string> OnError;
 
         public NPCConfig Config => _config;
         public int ExchangeCount => _exchangeCount;
 
         public void Configure(NPCConfig config)
         {
+            if (config == null)
+                throw new ArgumentNullException(nameof(config), "NPCConfig cannot be null");
+            if (string.IsNullOrEmpty(config.NpcId))
+                throw new ArgumentException("NPCConfig.NpcId must not be empty", nameof(config));
+
             _config = config;
             Core.VantageClient.EnsureInitialized();
         }
