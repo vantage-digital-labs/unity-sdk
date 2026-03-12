@@ -18,6 +18,28 @@ Official Unity SDK for integrating Vantage AI-powered NPCs into your game.
 1. Open **Window > Package Manager**
 2. Click **+** > **Add package from git URL**
 3. Enter: `https://github.com/vantage-digital-labs/unity-sdk.git`
+4. Click **Add** — Unity will download and import the package automatically
+
+> **Note:** Requires `com.unity.nuget.newtonsoft-json` 3.2.1 or newer. Install it first via Package Manager if not already present.
+
+### scoped registry (alternative)
+
+Add to your `Packages/manifest.json`:
+
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "Vantage Labs",
+      "url": "https://registry.vantage-digital.online/npm",
+      "scopes": ["com.vantagelabs"]
+    }
+  ],
+  "dependencies": {
+    "com.vantagelabs.sdk": "2.4.0"
+  }
+}
+```
 
 ### Manual
 
