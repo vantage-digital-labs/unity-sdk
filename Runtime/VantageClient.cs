@@ -19,7 +19,7 @@ namespace VantageLabs.Core
         public VantageRegion Region = VantageRegion.Tokyo;
         public bool EnableVoice = true;
         public string Language = "ja";
-        public int TimeoutMs = 8000;
+        public int TimeoutMs = 10000;
         public int MaxRetries = 3;
     }
 

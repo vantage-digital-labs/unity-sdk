@@ -139,13 +139,18 @@ namespace VantageLabs.NPC
             using var www = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(
                 url, AudioType.OGGVORBIS);
             www.SetRequestHeader("Authorization", $"Bearer {Core.VantageClient.ApiKey}");
+            // Allow extra time for voice data — audio files can be several MB
+            www.timeout = Core.VantageClient.Config.TimeoutMs / 1000 * 3;
 
             var op = www.SendWebRequest();
             while (!op.isDone)
                 await Task.Yield();
 
             if (www.result != UnityEngine.Networking.UnityWebRequest.Result.Success)
+            {
+                OnError?.Invoke($"[Vantage] Audio stream failed: {www.error}");
                 return null;
+            }
 
             return UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(www);
         }
