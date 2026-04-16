@@ -52,18 +52,12 @@ namespace VantageLabs.NPC
         public event Action<DialogueChunk> OnDialogueChunk;
         public event Action<EmotionState> OnEmotionChange;
         public event Action<AudioClip> OnAudioReady;
-        public event Action<string> OnError;
 
         public NPCConfig Config => _config;
         public int ExchangeCount => _exchangeCount;
 
         public void Configure(NPCConfig config)
         {
-            if (config == null)
-                throw new ArgumentNullException(nameof(config), "NPCConfig cannot be null");
-            if (string.IsNullOrEmpty(config.NpcId))
-                throw new ArgumentException("NPCConfig.NpcId must not be empty", nameof(config));
-
             _config = config;
             Core.VantageClient.EnsureInitialized();
         }
@@ -139,18 +133,13 @@ namespace VantageLabs.NPC
             using var www = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(
                 url, AudioType.OGGVORBIS);
             www.SetRequestHeader("Authorization", $"Bearer {Core.VantageClient.ApiKey}");
-            // Allow extra time for voice data — audio files can be several MB
-            www.timeout = Core.VantageClient.Config.TimeoutMs / 1000 * 3;
 
             var op = www.SendWebRequest();
             while (!op.isDone)
                 await Task.Yield();
 
             if (www.result != UnityEngine.Networking.UnityWebRequest.Result.Success)
-            {
-                OnError?.Invoke($"[Vantage] Audio stream failed: {www.error}");
                 return null;
-            }
 
             return UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(www);
         }
